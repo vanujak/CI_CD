@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+
+      # If you later add Selenium UI tests, uncomment this block:
+      # - name: Set up Chrome (for headless Selenium)
+      #   uses: browser-actions/setup-chrome@v1
+      #   id: chrome
+
+      - name: Build & Test (JUnit + Cucumber)
+        env:
+          # CHROME_BIN: ${{ steps.chrome.outputs.chrome-path }}   # needed only for Selenium
+          CI: "true"
+        run: |
+          mvn -B -ntp clean test
+
+      - name: Upload test artifacts (JUnit XML + Cucumber HTML/JSON)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-artifacts
+          path: |
+            target/surefire-reports/**
+            target/failsafe-reports/**
+            target/cucumber-report/**
