@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CalculatorSteps {
 
     private Calculator calc;
-    private Double result;                // use Double, not Integer
+    private Double result;
     private RuntimeException caught;
 
     @Given("a fresh calculator")
@@ -19,7 +19,7 @@ public class CalculatorSteps {
 
     @When("I add {int} and {int}")
     public void i_add_and(Integer a, Integer b) {
-        result = (double) calc.add(a, b);   // cast to double for consistency
+        result = (double) calc.add(a, b);
     }
 
     @When("I subtract {int} minus {int}")
@@ -27,7 +27,7 @@ public class CalculatorSteps {
         result = (double) calc.subtract(a, b);
     }
 
-    @When("I divide {double} by {double}")   // use {double} to match Calculator.divide
+    @When("I divide {double} by {double}")
     public void i_divide_by(Double a, Double b) {
         try {
             result = calc.divide(a.intValue(), b.intValue());
@@ -36,10 +36,10 @@ public class CalculatorSteps {
         }
     }
 
-    @Then("the result should be {double}")   // expect a decimal/double result
+    @Then("the result should be {double}")
     public void the_result_should_be(Double expected) {
         assertNotNull(result, "Expected a result but got null");
-        assertEquals(expected, result, 0.0001); // small tolerance for doubles
+        assertEquals(expected, result, 0.0001);
     }
 
     @Then("I should see an error {string}")
