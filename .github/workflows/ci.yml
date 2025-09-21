@@ -19,11 +19,6 @@ jobs:
           java-version: '17'
           cache: maven
 
-      # If you later add Selenium UI tests, uncomment this block:
-      # - name: Set up Chrome (for headless Selenium)
-      #   uses: browser-actions/setup-chrome@v1
-      #   id: chrome
-
       - name: Build & Test (JUnit + Cucumber)
         env:
           # CHROME_BIN: ${{ steps.chrome.outputs.chrome-path }}   # needed only for Selenium
